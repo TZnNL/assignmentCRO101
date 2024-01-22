@@ -1,18 +1,20 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { View, Text } from "react-native";
+import Cart from "./cart";
+import Person from "./person";
+import Home from "./home";
 
-export default ({ navigation, route }) => {
+const Tab = createBottomTabNavigator();
+
+export default () => {
     return (
-        <View style={{ flex: 1, backgroundColor: 'wheat' }}>
-              <Text>{route.params.us} adajdaks {route.params.pw} check </Text>
-              {sol(route)}
-        </View>
+        <NavigationContainer>
+            <Tab.Navigator initialRouteName="home">
+                <Tab.Screen name="home" component={Home}/>
+                <Tab.Screen name="cart" component={Cart}/>
+                <Tab.Screen name="person" component={Person}/>
+            </Tab.Navigator>
+        </NavigationContainer>
     );
-
-}
-sol = (route)=> {
-    if(route.params.isCheck){
-        return <Text>true</Text>
-    }
-    return <Text>false</Text>
 }

@@ -8,9 +8,6 @@ class User {
     this.phone = phone;
     this.email = email;
   }
-  static createUser(iduser, username, password, name, address, phone, email) {
-    return new User(iduser, username, password, name, address, phone, email);
-  }
 }
 
 export default User;

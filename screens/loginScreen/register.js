@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, TextInput, TouchableOpacity, View, Image, Dimensions, ImageBackground } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import SInfo from 'react-native-sensitive-info';
-
-const widthWD = Dimensions.get("window");
+import { Text, StyleSheet, TextInput, TouchableOpacity, View, Image, ImageBackground, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 
 const App = ({ navigation }) => {
     const [getUS, setUS] = useState('');
@@ -11,66 +7,68 @@ const App = ({ navigation }) => {
     const [getName, setName] = useState('');
     const [getcfPW, setcfPW] = useState('');
 
-    // useEffect(() => {
-    //     console.log("getUS updated:", getUS);
-    // }, [getUS]);
-    
-    // useEffect(() => {
-    //     console.log("getPW updated:", getPW);
-    // }, [getPW]);
+    const handleRegister = () => {
+        // Xử lý logic đăng ký ở đây
+    };
 
     return (
-        <ImageBackground source={require('../../assets/bg1.jpg')}
-            style={{
-                flex: 1,
-                resizeMode: 'cover',
-                justifyContent: 'center',
-            }}>
-            <View style={styles.container}>
-                <Image source={require('../../assets/spl.png')} style={styles.logo} />
-                <Text style={styles.loginText}>Register</Text>
+        <ImageBackground
+            source={require('../../assets/bg1.jpg')}
+            style={styles.backgroundImage}
+        >
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+                <ScrollView contentContainerStyle={styles.scrollView}>
 
-                <View style={styles.boxLogin}>
-                    <Text style={styles.boxInput}>Tên đăng nhập hoặc email</Text>
-                    <TextInput
-                        placeholder="Email/Username"
-                        onChangeText={(us) => setUS(us)}
-                        style={{ borderColor: 'black', width: '90%', padding: 20 }}
-                    />
-                    <Text style={styles.boxInput}>Họ tên</Text>
-                    <TextInput
-                        placeholder="Họ tên"
-                        onChangeText={(name) => setName(name)}
-                        style={{ borderColor: 'black', width: '90%', padding: 20 }}
-                    />
-                    <Text style={styles.boxInput}>Mật khẩu</Text>
-                    <TextInput
-                        placeholder="Mật khẩu"
-                        onChangeText={(pw) => setPW(pw)}
-                        style={{ borderColor: 'black', width: '90%', padding: 20 }}
-                    />
-                    <Text style={styles.boxInput}>Nhâp lại mật khẩu</Text>
-                    <TextInput
-                        placeholder="Nhâp lại mật khẩu"
-                        onChangeText={(pw) => setcfPW(pw)}
-                        style={{ borderColor: 'black', width: '90%', padding: 20 }}
-                    />
-                </View>
-                <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around' }} >
-                    <TouchableOpacity style={{ width: '40%', backgroundColor: 'white', padding: '3%', alignItems: 'center', borderRadius: 15, borderColor: '#52D3D8' }}
-                        onPress={() => {
-                            navigation.navigate('Home', { us: getUS, pw: getPW });
-                        }}>
-                        <Text style={{ color: '#52D3D8' }}>Đăng ký</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnBack}
-                        onPress={() => {
-                            navigation.goBack()
-                        }}>
-                        <Text>Quay lại</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                <Image source={require('../../assets/spl.png')} style={styles.logo} />
+                    <View style={styles.loginContainer}>
+                        <Text style={styles.loginText}>Register</Text>
+
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                                placeholder="Email/Username"
+                                onChangeText={(us) => setUS(us)}
+                                style={styles.input}
+                            />
+                            <TextInput
+                                placeholder="Họ tên"
+                                onChangeText={(name) => setName(name)}
+                                style={styles.input}
+                            />
+                            <TextInput
+                                placeholder="Mật khẩu"
+                                onChangeText={(pw) => setPW(pw)}
+                                style={styles.input}
+                                secureTextEntry
+                            />
+                            <TextInput
+                                placeholder="Nhập lại mật khẩu"
+                                onChangeText={(pw) => setcfPW(pw)}
+                                style={styles.input}
+                                secureTextEntry
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={styles.registerButton}
+                                onPress={handleRegister}
+                            >
+                                <Text style={styles.buttonText}>Đăng ký</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.backButton}
+                                onPress={() => navigation.goBack()}
+                            >
+                                <Text>Quay lại</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </ScrollView>
+            </KeyboardAvoidingView>
         </ImageBackground>
     );
 }
@@ -78,39 +76,76 @@ const App = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%',
-        height: '100%',
+    },
+    scrollView: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+    },
+    loginContainer: {
+        width: '80%',
+        backgroundColor: 'white',
+        opacity: 1,
+        marginBottom: 130,
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginHorizontal: '10%',
+        borderRadius: 20,
+        paddingVertical: 8,
     },
     logo: {
         width: '100%',
         resizeMode: 'contain',
     },
     loginText: {
-        alignItems: 'center', width: '100%',
         fontSize: 25,
-        justifyContent: 'center',
         textAlign: 'center',
-        marginTop: -30,
+        // marginTop: -30,
         marginBottom: 10,
-        color: 'white'
+        color: 'black',
     },
-    boxLogin: {
-        width: '80%',
-        height: 'auto',
+    inputContainer: {
+        width: '100%',
+        padding: 20,
+
+    },
+    input: {
+        borderColor: 'black',
+        borderWidth: 1,
+        marginBottom: 16,
+        paddingHorizontal: 10,
+        margin: 'auto',
+        height: 40,
+    },
+    buttonContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    registerButton: {
+        width: '40%',
         backgroundColor: 'white',
-        opacity: 1,
-        marginBottom: 35,
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginHorizontal: '10%',
-        borderRadius: 20,
-        paddingVertical: 8
+        padding: '3%',
+        alignItems: 'center',
+        borderRadius: 15,
+        borderColor: '#52D3D8',
     },
-    boxInput: {
-        paddingHorizontal: 20,
-        paddingVertical: 7
+    backButton: {
+        width: '40%',
+        backgroundColor: '#FF90BC',
+        padding: '3%',
+        alignItems: 'center',
+        borderRadius: 15,
+        borderColor: '#52D3D8',
     },
-    btnBack: { width: '40%', backgroundColor: '#FF90BC', padding: '3%', alignItems: 'center', borderRadius: 15, borderColor: '#52D3D8' }
+    buttonText: {
+        color: '#52D3D8',
+    },
 });
 
 export default App;
